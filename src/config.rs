@@ -1,0 +1,1 @@
+pub const COLORS_RECT_POINT_SIZE: u32 = 16;

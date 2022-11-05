@@ -1,5 +1,7 @@
 extern crate sdl2;
 
+mod tools;
+mod config;
 mod colors_rect;
 
 use std::time::Duration;
@@ -9,7 +11,6 @@ use sdl2::keyboard::Keycode;
 use sdl2::rect::Rect;
 
 use crate::colors_rect::ColorRect;
-
 
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
