@@ -12,12 +12,11 @@ pub struct ColorRect {
 
 impl ColorRect {
     pub fn new(rect: Rect) -> ColorRect {
-        let cr = ColorRect {
+        ColorRect {
             rect: rect,
             point: Point::new(0, 0),
             hue: 120.,
-        };
-        cr
+        }
     }
 
     fn draw_point(&mut self, canvas: &mut Canvas<Window>) {
