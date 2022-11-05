@@ -1,12 +1,15 @@
 extern crate sdl2;
 
+mod color_rect;
+
 use std::time::Duration;
 use sdl2::pixels::Color;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::rect::Rect;
 
-mod color_rect;
+use crate::color_rect::ColorRect;
+
 
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -25,7 +28,8 @@ pub fn main() {
     let mut event_pump = sdl_context.event_pump().unwrap();
     let mut i = 0;
 
-    let color_rect: Rect = Rect::new(20, 20, 20, 20);
+    //let color_rect: Rect = Rect::new(20, 20, 20, 20);
+    let mut color_rect: ColorRect = ColorRect::new(Rect::new(20, 20, 200, 200));
 
     'running: loop {
         i = (i + 1) % 255;
@@ -33,7 +37,7 @@ pub fn main() {
         canvas.clear();
 
         canvas.set_draw_color(Color::RGB(i, 64, 64));
-        canvas.draw_rect(color_rect).expect("");
+        color_rect.draw(&mut canvas);
 
         for event in event_pump.poll_iter() {
             match event {
