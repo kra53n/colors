@@ -29,7 +29,7 @@ pub fn main() {
     let mut i = 0;
 
     //let color_rect: Rect = Rect::new(20, 20, 20, 20);
-    let mut color_rect: ColorRect = ColorRect::new(Rect::new(20, 20, 200, 200));
+    let mut color_rect: ColorRect = ColorRect::new(Rect::new(20, 20, 200*2, 200));
 
     'running: loop {
         i = (i + 1) % 255;
