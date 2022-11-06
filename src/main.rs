@@ -3,6 +3,7 @@ extern crate sdl2;
 mod tools;
 mod config;
 mod colors_rect;
+mod colors_line;
 
 use std::time::Duration;
 use sdl2::pixels::Color;
@@ -10,7 +11,8 @@ use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::rect::Rect;
 
-use crate::colors_rect::ColorRect;
+use crate::colors_rect::ColorsRect;
+use crate::colors_line::ColorsLine;
 
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -30,7 +32,8 @@ pub fn main() {
     let mut i = 0;
 
     //let color_rect: Rect = Rect::new(20, 20, 20, 20);
-    let mut color_rect: ColorRect = ColorRect::new(Rect::new(20, 20, 200*2, 200));
+    let mut colors_rect: ColorsRect = ColorsRect::new(Rect::new(20, 20, 400, 200));
+    let mut colors_line: ColorsLine = ColorsLine::new(Rect::new(20, 230, 400, 8));
 
     'running: loop {
         i = (i + 1) % 255;
@@ -38,7 +41,8 @@ pub fn main() {
         canvas.clear();
 
         canvas.set_draw_color(Color::RGB(i, 64, 64));
-        color_rect.draw(&mut canvas);
+        colors_rect.draw(&mut canvas);
+        colors_line.draw(&mut canvas);
 
         for event in event_pump.poll_iter() {
             match event {

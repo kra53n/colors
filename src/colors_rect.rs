@@ -1,22 +1,22 @@
-use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::pixels::Color;
+use sdl2::render::Canvas;
 use sdl2::rect::{Rect, Point};
 use palette::{Hsv, Srgb, IntoColor};
 
 use crate::config::COLORS_RECT_POINT_SIZE;
 use crate::tools::{get_rect_center, set_rect_center};
 
-pub struct ColorRect {
+pub struct ColorsRect {
     rect: Rect,
     point: Point,
     point_color: Color,
     hue: f32, // hue
 }
 
-impl ColorRect {
-    pub fn new(rect: Rect) -> ColorRect {
-        let mut cr = ColorRect {
+impl ColorsRect {
+    pub fn new(rect: Rect) -> ColorsRect {
+        let mut cr = ColorsRect {
             rect: rect,
             point: Point::new(0, 0),
             point_color: Color::RGB(0, 0, 0),
