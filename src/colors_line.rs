@@ -10,12 +10,14 @@ use crate::tools::{get_rect_center, set_rect_center};
 pub struct ColorsLine {
     rect: Rect,
     point: Point,
+    point_color: Color,
 }
 
 impl ColorsLine {
     pub fn new(rect: Rect) -> ColorsLine {
         let mut cl = ColorsLine {
             rect: rect,
+            point_color: Color::RGB(0, 0, 0),
             point: Point::new(0, 0),
         };
         cl.point.x = cl.rect.x;
@@ -24,20 +26,21 @@ impl ColorsLine {
     }
 
 
-    // fn draw_point(&mut self, canvas: &mut Canvas<Window>) {
-    //     let mut rect = Rect::new(0, 0, COLORS_RECT_POINT_SIZE, COLORS_RECT_POINT_SIZE);
+    fn draw_point(&mut self, canvas: &mut Canvas<Window>) {
+        let mut rect = Rect::new(0, 0, COLORS_RECT_POINT_SIZE, COLORS_RECT_POINT_SIZE);
+        let mut point = Point::new(self.rect.x, self.rect.y + self.rect.h / 2);
 
-    //     let colors = [Color::RGB(0, 0, 0), self.point_color];
-    //     for color in colors {
-    //         set_rect_center(&mut rect, &mut self.point);
+        let colors = [Color::RGB(0, 0, 0), self.point_color];
+        for color in colors {
+            set_rect_center(&mut rect, &mut point);
 
-    //         canvas.set_draw_color(color);
-    //         canvas.fill_rect(rect).expect("can't draw fill rect");
+            canvas.set_draw_color(color);
+            canvas.fill_rect(rect).expect("can't draw fill rect");
 
-    //         rect.w -= 2;
-    //         rect.h -= 2;
-    //     }
-    // }
+            rect.w -= 2;
+            rect.h -= 2;
+        }
+    }
 
     pub fn draw(&mut self, canvas: &mut Canvas<Window>) {
         let w: u32 = 1;
@@ -50,9 +53,14 @@ impl ColorsLine {
                 (rgb.blue * 255.) as u8,
             );
 
+            if (self.rect.x - self.point.x).abs() <= 5 {
+                self.point_color = color;
+            }
+
             canvas.set_draw_color(color);
             canvas.draw_rect(rect).expect("can't draw rect");
             rect.x += w as i32;
         }
+        self.draw_point(canvas);
     }
 }

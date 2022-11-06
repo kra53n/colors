@@ -33,7 +33,7 @@ pub fn main() {
 
     //let color_rect: Rect = Rect::new(20, 20, 20, 20);
     let mut colors_rect: ColorsRect = ColorsRect::new(Rect::new(20, 20, 400, 200));
-    let mut colors_line: ColorsLine = ColorsLine::new(Rect::new(20, 230, 400, 8));
+    let mut colors_line: ColorsLine = ColorsLine::new(Rect::new(20, 236, 400, 8));
 
     'running: loop {
         i = (i + 1) % 255;
