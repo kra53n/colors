@@ -18,7 +18,7 @@ pub fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
 
-    let window = video_subsystem.window("Colors", 800, 600)
+    let window = video_subsystem.window("mycolor", 800, 600)
         .position_centered()
         .build()
         .unwrap();
@@ -53,7 +53,9 @@ pub fn main() {
                 Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
                     break 'running
                 },
-                _ => {to_draw = true}
+                _ => {
+                    to_draw = true
+                },
             }
         }
         // The rest of the game loop goes here...
