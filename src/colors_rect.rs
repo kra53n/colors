@@ -11,7 +11,7 @@ pub struct ColorsRect {
     rect: Rect,
     point: Point,
     point_color: Color,
-    hue: f32, // hue
+    hue: f32,
 }
 
 impl ColorsRect {
