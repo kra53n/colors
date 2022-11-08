@@ -1,16 +1,18 @@
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::pixels::Color;
+use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 use palette::{Hsv, Srgb, IntoColor};
 
 use crate::config::COLORS_RECT_POINT_SIZE;
-use crate::tools::{get_rect_center, set_rect_center};
+use crate::tools::{get_rect_center, set_rect_center, return_point_to_rect_edge};
 
 pub struct ColorsLine {
     rect: Rect,
     point: Point,
     point_color: Color,
+    toggled: bool,
 }
 
 impl ColorsLine {
@@ -19,20 +21,20 @@ impl ColorsLine {
             rect: rect,
             point_color: Color::RGB(0, 0, 0),
             point: Point::new(0, 0),
+	    toggled: false,
         };
         cl.point.x = cl.rect.x;
-        cl.point.y = cl.rect.y;
+        cl.point.y = cl.rect.y + cl.rect.h / 2;
         cl
     }
 
 
     fn draw_point(&mut self, canvas: &mut Canvas<Window>) {
         let mut rect = Rect::new(0, 0, COLORS_RECT_POINT_SIZE, COLORS_RECT_POINT_SIZE);
-        let mut point = Point::new(self.rect.x, self.rect.y + self.rect.h / 2);
 
         let colors = [Color::RGB(0, 0, 0), self.point_color];
         for color in colors {
-            set_rect_center(&mut rect, &mut point);
+            set_rect_center(&mut rect, &mut self.point);
 
             canvas.set_draw_color(color);
             canvas.fill_rect(rect).expect("can't draw fill rect");
@@ -53,14 +55,32 @@ impl ColorsLine {
                 (rgb.blue * 255.) as u8,
             );
 
-            if (self.rect.x - self.point.x).abs() <= 5 {
-                self.point_color = color;
-            }
+	    if self.point.x - self.rect.x == i {
+		self.point_color = color;
+	    }
 
             canvas.set_draw_color(color);
             canvas.draw_rect(rect).expect("can't draw rect");
             rect.x += w as i32;
         }
         self.draw_point(canvas);
+    }
+
+    pub fn update(&mut self, mouse: &MouseState) {
+	let cursor = Point::new(mouse.x(), mouse.y());
+	if (mouse.left() && self.rect.contains_point(cursor)) || self.toggled {
+	    self.point = cursor;
+	    self.toggled = true;
+	    return_point_to_rect_edge(&mut self.point, self.rect);
+	    self.point.y = self.rect.y + self.rect.h / 2;
+	}
+
+	if !mouse.left() {
+	    self.toggled = false;
+	}
+    }
+
+    pub fn get_hue(&mut self) -> f32 {
+	return (self.point.x - self.rect.x) as f32 * 360. / self.rect.w as f32;
     }
 }

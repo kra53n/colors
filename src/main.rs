@@ -10,6 +10,7 @@ use sdl2::rect::Rect;
 use sdl2::event::Event;
 use sdl2::pixels::Color;
 use sdl2::keyboard::Keycode;
+use sdl2::mouse::MouseButton;
 
 use crate::colors_rect::ColorsRect;
 use crate::colors_line::ColorsLine;
@@ -59,7 +60,11 @@ pub fn main() {
         }
 
 	let mouse = event_pump.mouse_state();
-	colors_rect.update(&mouse);
+	if mouse.is_mouse_button_pressed(MouseButton::Left) {
+	    colors_rect.update(&mouse);
+	    colors_line.update(&mouse);
+	    colors_rect.set_hue(colors_line.get_hue());
+	}
 
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }

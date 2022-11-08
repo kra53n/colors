@@ -22,7 +22,7 @@ impl ColorsRect {
             rect: rect,
             point: Point::new(0, 0),
             point_color: Color::RGB(0, 0, 0),
-            hue: 20.,
+            hue: 0.,
 	    toggled: false,
         };
         cr.point.x = cr.rect.x;
@@ -88,5 +88,9 @@ impl ColorsRect {
 	if !mouse.left() {
 	    self.toggled = false;
 	}
+    }
+
+    pub fn set_hue(&mut self, hue: f32) {
+	self.hue = hue;
     }
 }
