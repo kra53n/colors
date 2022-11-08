@@ -87,7 +87,7 @@ impl ColorsRect {
 
 	if !mouse.left() {
 	    self.toggled = false;
-	}
+	
     }
 
     pub fn set_hue(&mut self, hue: f32) {
