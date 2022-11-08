@@ -60,9 +60,9 @@ pub fn main() {
         }
 
 	let mouse = event_pump.mouse_state();
+	colors_rect.update(&mouse);
+	colors_line.update(&mouse);
 	if mouse.is_mouse_button_pressed(MouseButton::Left) {
-	    colors_rect.update(&mouse);
-	    colors_line.update(&mouse);
 	    colors_rect.set_hue(colors_line.get_hue());
 	}
 
