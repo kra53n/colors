@@ -30,7 +30,6 @@ pub fn main() {
     canvas.present();
     let mut event_pump = sdl_context.event_pump().unwrap();
 
-    //let color_rect: Rect = Rect::new(20, 20, 20, 20);
     let mut colors_rect: ColorsRect = ColorsRect::new(Rect::new(20, 20, 400, 200));
     let mut colors_line: ColorsLine = ColorsLine::new(Rect::new(20, 236, 400, 8));
 
@@ -54,11 +53,13 @@ pub fn main() {
                     break 'running
                 },
                 _ => {
-                    to_draw = true
+                    to_draw = true;
                 },
             }
         }
-        // The rest of the game loop goes here...
+
+	let mouse = event_pump.mouse_state();
+	colors_rect.update(&mouse);
 
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }

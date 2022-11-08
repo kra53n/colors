@@ -1,17 +1,19 @@
 use sdl2::video::Window;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
+use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 use palette::{Hsv, Srgb, IntoColor};
 
 use crate::config::COLORS_RECT_POINT_SIZE;
-use crate::tools::{get_rect_center, set_rect_center};
+use crate::tools::{get_rect_center, set_rect_center, return_point_to_rect_edge};
 
 pub struct ColorsRect {
     rect: Rect,
     point: Point,
     point_color: Color,
     hue: f32,
+    toggled: bool,
 }
 
 impl ColorsRect {
@@ -20,7 +22,8 @@ impl ColorsRect {
             rect: rect,
             point: Point::new(0, 0),
             point_color: Color::RGB(0, 0, 0),
-            hue: 120.,
+            hue: 20.,
+	    toggled: false,
         };
         cr.point.x = cr.rect.x;
         cr.point.y = cr.rect.y;
@@ -72,5 +75,18 @@ impl ColorsRect {
             }
         }
         self.draw_point(canvas);
+    }
+
+    pub fn update(&mut self, mouse: &MouseState) {
+	let cursor = Point::new(mouse.x(), mouse.y());
+	if (mouse.left() && self.rect.contains_point(cursor)) || self.toggled {
+	    self.point = cursor;
+	    self.toggled = true;
+	    return_point_to_rect_edge(&mut self.point, self.rect);
+	}
+
+	if !mouse.left() {
+	    self.toggled = false;
+	}
     }
 }
