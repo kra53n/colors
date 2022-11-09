@@ -17,11 +17,12 @@ use crate::tools::hsv2rgb;
 use crate::colors_rect::ColorsRect;
 use crate::colors_line::ColorsLine;
 use crate::color_square::ColorSquare;
-use crate::config::COLOR_SQUARE_BORDER_SIZE;
+use crate::config::{COLOR_SQUARE_BORDER_SIZE, FONT_PATH, FONT_SIZE};
 
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
+    let ttf_context = sdl2::ttf::init().unwrap();
 
     let window = video_subsystem.window("mycolor", 800, 600)
         .position_centered()
@@ -29,6 +30,7 @@ pub fn main() {
         .unwrap();
 
     let mut canvas = window.into_canvas().build().unwrap();
+    let font = ttf_context.load_font(FONT_PATH, FONT_SIZE).unwrap();
 
     canvas.set_draw_color(Color::RGB(0, 255, 255));
     canvas.clear();
@@ -41,6 +43,11 @@ pub fn main() {
 	Rect::new(436 + COLOR_SQUARE_BORDER_SIZE as i32 / 2, 20 + COLOR_SQUARE_BORDER_SIZE as i32 / 2, 80, 80),
 	Color::RGB(0, 0, 0),
     );
+
+    let surface = font
+	.render("Hello sdl2_ttf!")
+	.blended(Color::RGB(255, 0, 0))
+	.unwrap();
 
     let mut to_draw = true;
 
