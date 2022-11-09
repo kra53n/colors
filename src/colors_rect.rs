@@ -64,7 +64,7 @@ impl ColorsRect {
                 let x = self.rect.x + s * w;
                 let y = self.rect.y + (100 - v) * h;
 
-                if (self.point.x - x).abs() <= 5 && (self.point.y - y).abs() <= 5 {
+                if (self.point.x - x).abs() <= 2 && (self.point.y - y).abs() <= 2 {
                     self.point_color = color;
                 }
 
@@ -92,5 +92,13 @@ impl ColorsRect {
 
     pub fn set_hue(&mut self, hue: f32) {
 	self.hue = hue;
+    }
+
+    pub fn get_saturation(&mut self) -> f32 {
+	return (self.point.x - self.rect.x) as f32 / self.rect.w as f32;
+    }
+
+    pub fn get_value(&mut self) -> f32 {
+	return 1. - (self.point.y - self.rect.y) as f32 / self.rect.h as f32;
     }
 }
