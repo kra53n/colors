@@ -1,1 +1,2 @@
 pub const COLORS_RECT_POINT_SIZE: u32 = 16;
+pub const COLOR_SQUARE_BORDER_SIZE: u32 = 4;

@@ -94,11 +94,11 @@ impl ColorsRect {
 	self.hue = hue;
     }
 
-    pub fn get_saturation(&mut self) -> f32 {
+    pub fn get_saturation(&self) -> f32 {
 	return (self.point.x - self.rect.x) as f32 / self.rect.w as f32;
     }
 
-    pub fn get_value(&mut self) -> f32 {
+    pub fn get_value(&self) -> f32 {
 	return 1. - (self.point.y - self.rect.y) as f32 / self.rect.h as f32;
     }
 }

@@ -4,6 +4,7 @@ mod tools;
 mod config;
 mod colors_rect;
 mod colors_line;
+mod color_square;
 
 use std::time::Duration;
 use sdl2::rect::Rect;
@@ -13,8 +14,11 @@ use sdl2::keyboard::Keycode;
 use sdl2::mouse::MouseButton;
 use palette::{Hsv, Srgb, IntoColor};
 
+use crate::tools::hsv2rgb;
 use crate::colors_rect::ColorsRect;
 use crate::colors_line::ColorsLine;
+use crate::color_square::ColorSquare;
+use crate::config::COLOR_SQUARE_BORDER_SIZE;
 
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -34,6 +38,10 @@ pub fn main() {
 
     let mut colors_rect: ColorsRect = ColorsRect::new(Rect::new(20, 20, 400, 200));
     let mut colors_line: ColorsLine = ColorsLine::new(Rect::new(20, 236, 400, 8));
+    let mut color_square: ColorSquare = ColorSquare::new(
+	Rect::new(436 + COLOR_SQUARE_BORDER_SIZE as i32 / 2, 20 + COLOR_SQUARE_BORDER_SIZE as i32 / 2, 80, 80),
+	Color::RGB(0, 0, 0),
+    );
 
     let mut to_draw = true;
 
@@ -44,6 +52,7 @@ pub fn main() {
         if to_draw {
             colors_rect.draw(&mut canvas);
             colors_line.draw(&mut canvas);
+	    color_square.draw(&mut canvas);
             canvas.present();
         }
         to_draw = false;
@@ -65,6 +74,13 @@ pub fn main() {
 	colors_line.update(&mouse);
 	if mouse.is_mouse_button_pressed(MouseButton::Left) {
 	    colors_rect.set_hue(colors_line.get_hue());
+	    color_square.set_color(
+		hsv2rgb(
+		    colors_line.get_hue(),
+		    colors_rect.get_saturation(),
+		    colors_rect.get_value()
+		)
+	    );
 	}
 
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));

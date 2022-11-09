@@ -80,7 +80,7 @@ impl ColorsLine {
 	}
     }
 
-    pub fn get_hue(&mut self) -> f32 {
+    pub fn get_hue(&self) -> f32 {
 	return (self.point.x - self.rect.x) as f32 * 360. / self.rect.w as f32;
     }
 }
