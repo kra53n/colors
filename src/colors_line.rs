@@ -3,10 +3,9 @@ use sdl2::video::Window;
 use sdl2::pixels::Color;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
-use palette::{Hsv, Srgb, IntoColor};
 
 use crate::config::COLORS_RECT_POINT_SIZE;
-use crate::tools::{get_rect_center, set_rect_center, return_point_to_rect_edge};
+use crate::tools::{hsv2rgb, set_rect_center, return_point_to_rect_edge};
 
 pub struct ColorsLine {
     rect: Rect,
@@ -48,12 +47,7 @@ impl ColorsLine {
         let w: u32 = 1;
         let mut rect: Rect = Rect::new(self.rect.x, self.rect.y, w, self.rect.h as u32);
         for i in 0..(self.rect.w / w as i32) {
-            let rgb: Srgb = Hsv::new((i * 360 * w as i32 / self.rect.w) as f32, 1., 1.).into_color();
-            let color = Color::RGB(
-                (rgb.red * 255.) as u8,
-                (rgb.green * 255.) as u8,
-                (rgb.blue * 255.) as u8,
-            );
+	    let color = hsv2rgb((i * 360 * w as i32 / self.rect.w) as f32, 1., 1.);
 
 	    if self.point.x - self.rect.x == i {
 		self.point_color = color;

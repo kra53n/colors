@@ -3,10 +3,9 @@ use sdl2::pixels::Color;
 use sdl2::render::Canvas;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
-use palette::{Hsv, Srgb, IntoColor};
 
 use crate::config::COLORS_RECT_POINT_SIZE;
-use crate::tools::{get_rect_center, set_rect_center, return_point_to_rect_edge};
+use crate::tools::{set_rect_center, hsv2rgb, return_point_to_rect_edge};
 
 pub struct ColorsRect {
     rect: Rect,
@@ -50,16 +49,7 @@ impl ColorsRect {
         let h = self.rect.h / 100;
         for s in 0..100 {
             for v in 0..100 {
-                let rgb: Srgb = Hsv::new(
-                    self.hue,
-                    s as f32 / 100.,
-                    v as f32 / 100.
-                ).into_color();
-                let color = Color::RGB(
-                    (rgb.red * 255.) as u8,
-                    (rgb.green * 255.) as u8,
-                    (rgb.blue * 255.) as u8,
-                );
+		let color = hsv2rgb(self.hue, s as f32 / 100., v as f32 / 100.);
 
                 let x = self.rect.x + s * w;
                 let y = self.rect.y + (100 - v) * h;
