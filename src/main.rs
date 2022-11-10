@@ -55,10 +55,10 @@ pub fn main() {
     let mut to_draw = true;
 
     'running: loop {
-        canvas.set_draw_color(Color::RGB(26, 27, 38));
-        canvas.clear();
-
         if to_draw {
+	    canvas.set_draw_color(Color::RGB(26, 27, 38));
+	    canvas.clear();
+
             colors_rect.draw(&mut canvas);
             colors_line.draw(&mut canvas);
 	    color_square.draw(&mut canvas);
