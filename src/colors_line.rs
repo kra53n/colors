@@ -20,7 +20,7 @@ impl ColorsLine {
             rect: rect,
             point_color: Color::RGB(0, 0, 0),
             point: Point::new(0, 0),
-	    toggled: false,
+            toggled: false,
         };
         cl.point.x = cl.rect.x;
         cl.point.y = cl.rect.y + cl.rect.h / 2;
