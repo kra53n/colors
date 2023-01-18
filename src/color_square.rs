@@ -3,28 +3,28 @@ use sdl2::video::Window;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
 
-use crate::config::COLOR_SQUARE_BORDER_SIZE;
-
 pub struct ColorSquare {
     rect: Rect,
     color: Color,
+	border_size: i32,
 }
 
 impl ColorSquare {
-    pub fn new(rect: Rect, color: Color) -> ColorSquare {
+    pub fn new(rect: Rect, color: Color, border_size: i32) -> ColorSquare {
         ColorSquare {
-            rect: rect,
-            color: color,
+            rect,
+            color,
+			border_size,
         }
     }
 
     pub fn draw(&self, canvas: &mut Canvas<Window>) {
         let rects = [
             Rect::new(
-            self.rect.x - COLOR_SQUARE_BORDER_SIZE as i32 / 2,
-            self.rect.y - COLOR_SQUARE_BORDER_SIZE as i32 / 2,
-            self.rect.w as u32 + COLOR_SQUARE_BORDER_SIZE,
-            self.rect.h as u32 + COLOR_SQUARE_BORDER_SIZE,
+				self.rect.x - self.border_size / 2,
+				self.rect.y - self.border_size / 2,
+				(self.rect.w + self.border_size) as u32,
+				(self.rect.h + self.border_size) as u32,
             ),
             self.rect,
         ];

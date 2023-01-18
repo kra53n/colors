@@ -4,22 +4,23 @@ use sdl2::pixels::Color;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 
-use crate::config::COLORS_RECT_POINT_SIZE;
 use crate::tools::{hsv2rgb, set_rect_center, return_point_to_rect_edge};
 
 pub struct ColorsLine {
     rect: Rect,
     point: Point,
     point_color: Color,
+	point_size: u32,
     toggled: bool,
 }
 
 impl ColorsLine {
-    pub fn new(rect: Rect) -> ColorsLine {
+    pub fn new(rect: Rect, point_size: u32) -> ColorsLine {
         let mut cl = ColorsLine {
             rect: rect,
             point_color: Color::RGB(0, 0, 0),
             point: Point::new(0, 0),
+			point_size,
             toggled: false,
         };
         cl.point.x = cl.rect.x;
@@ -29,7 +30,7 @@ impl ColorsLine {
 
 
     fn draw_point(&mut self, canvas: &mut Canvas<Window>) {
-        let mut rect = Rect::new(0, 0, COLORS_RECT_POINT_SIZE, COLORS_RECT_POINT_SIZE);
+        let mut rect = Rect::new(0, 0, self.point_size, self.point_size);
 
         let colors = [Color::RGB(0, 0, 0), self.point_color];
         for color in colors {
