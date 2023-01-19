@@ -2,6 +2,7 @@ use std::process;
 
 fn main() {
 	let config = mycolor::Config {
+		title: "mycolor",
 		w: 800,
 		h: 600,
 		font_path: "assets/fonts/JetBrainsMono-Regular.ttf",

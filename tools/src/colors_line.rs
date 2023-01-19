@@ -4,7 +4,7 @@ use sdl2::pixels::Color;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 
-use crate::tools::{hsv2rgb, set_rect_center, return_point_to_rect_edge};
+use crate::funcs::{hsv2rgb, set_rect_center, return_point_to_rect_edge};
 
 pub struct ColorsLine {
     rect: Rect,

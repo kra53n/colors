@@ -1,11 +1,10 @@
 [package]
-name = "mycolor"
+name = "tools"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 palette = "^0.6.1"
-tools = { path = "tools" }
 
 [dependencies.sdl2]
 version = "^0.35.2"

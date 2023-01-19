@@ -3,26 +3,23 @@ extern crate sdl2;
 use std::error::Error;
 use std::time::Duration;
 
-use sdl2::Sdl;
 use sdl2::rect::Rect;
 use sdl2::event::Event;
 use sdl2::pixels::Color;
 use sdl2::keyboard::Keycode;
 use sdl2::mouse::MouseButton;
 
-mod tools;
-mod colors_rect;
-mod colors_line;
-mod color_square;
-
-use crate::tools::hsv2rgb;
-use crate::colors_rect::ColorsRect;
-use crate::colors_line::ColorsLine;
-use crate::color_square::ColorSquare;
+use tools::{
+	hsv2rgb,
+	ColorsRect,
+	ColorsLine,
+	ColorSquare,
+};
 
 pub struct Config {
-	pub w: u16,
-	pub h: u16,
+	pub title: &'static str,
+	pub w: u32,
+	pub h: u32,
 	pub font_path: &'static str,
 	pub font_size: u16,
 	pub color_rect_point_size: u32,
@@ -34,7 +31,7 @@ pub fn run(config: &Config) -> Result<(), Box<dyn Error>> {
     let video_subsystem = sdl_context.video().unwrap();
     let ttf_context = sdl2::ttf::init().unwrap();
 
-    let window = video_subsystem.window("mycolor", 800, 600)
+    let window = video_subsystem.window(config.title, config.w, config.h)
         .position_centered()
         .build()
         .unwrap();

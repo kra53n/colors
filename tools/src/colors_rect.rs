@@ -4,7 +4,7 @@ use sdl2::render::Canvas;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 
-use crate::tools::{set_rect_center, hsv2rgb, return_point_to_rect_edge};
+use crate::funcs::{set_rect_center, hsv2rgb, return_point_to_rect_edge};
 
 pub struct ColorsRect {
     rect: Rect,
