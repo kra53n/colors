@@ -4,6 +4,7 @@ use sdl2::render::Canvas;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 
+use crate::traits::Draw;
 use crate::funcs::{set_rect_center, hsv2rgb, return_point_to_rect_edge};
 
 pub struct ColorsRect {
@@ -45,12 +46,40 @@ impl ColorsRect {
         }
     }
 
-    pub fn draw(&mut self, canvas: &mut Canvas<Window>) {
+
+    pub fn update(&mut self, mouse: &MouseState) {
+		let cursor = Point::new(mouse.x(), mouse.y());
+		if (mouse.left() && self.rect.contains_point(cursor)) || self.toggled {
+			self.point = cursor;
+			self.toggled = true;
+			return_point_to_rect_edge(&mut self.point, self.rect);
+		}
+
+		if !mouse.left() {
+			self.toggled = false;
+		}
+    }
+
+    pub fn set_hue(&mut self, hue: f32) {
+	self.hue = hue;
+    }
+
+    pub fn get_saturation(&self) -> f32 {
+	return (self.point.x - self.rect.x) as f32 / self.rect.w as f32;
+    }
+
+    pub fn get_value(&self) -> f32 {
+	return 1. - (self.point.y - self.rect.y) as f32 / self.rect.h as f32;
+    }
+}
+
+impl Draw for ColorsRect {
+    fn draw(&mut self, canvas: &mut Canvas<Window>) {
         let w = self.rect.w / 100;
         let h = self.rect.h / 100;
         for s in 0..100 {
             for v in 0..100 {
-		let color = hsv2rgb(self.hue, s as f32 / 100., v as f32 / 100.);
+				let color = hsv2rgb(self.hue, s as f32 / 100., v as f32 / 100.);
 
                 let x = self.rect.x + s * w;
                 let y = self.rect.y + (100 - v) * h;
@@ -66,30 +95,5 @@ impl ColorsRect {
             }
         }
         self.draw_point(canvas);
-    }
-
-    pub fn update(&mut self, mouse: &MouseState) {
-	let cursor = Point::new(mouse.x(), mouse.y());
-	if (mouse.left() && self.rect.contains_point(cursor)) || self.toggled {
-	    self.point = cursor;
-	    self.toggled = true;
-	    return_point_to_rect_edge(&mut self.point, self.rect);
-	}
-
-	if !mouse.left() {
-	    self.toggled = false;
-	}
-    }
-
-    pub fn set_hue(&mut self, hue: f32) {
-	self.hue = hue;
-    }
-
-    pub fn get_saturation(&self) -> f32 {
-	return (self.point.x - self.rect.x) as f32 / self.rect.w as f32;
-    }
-
-    pub fn get_value(&self) -> f32 {
-	return 1. - (self.point.y - self.rect.y) as f32 / self.rect.h as f32;
     }
 }

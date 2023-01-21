@@ -16,6 +16,10 @@ use tools::{
 	ColorSquare,
 };
 
+use tools::traits::{
+	Draw,
+};
+
 pub struct Config {
 	pub title: &'static str,
 	pub w: u32,
@@ -67,13 +71,14 @@ pub fn run(config: &Config) -> Result<(), Box<dyn Error>> {
 
     'running: loop {
         if to_draw {
-	    canvas.set_draw_color(Color::RGB(26, 27, 38));
-	    canvas.clear();
+			canvas.set_draw_color(Color::RGB(26, 27, 38));
+			canvas.clear();
 
-            colors_rect.draw(&mut canvas);
-            colors_line.draw(&mut canvas);
-	    color_square.draw(&mut canvas);
-            canvas.present();
+			colors_rect.draw(&mut canvas);
+			colors_line.draw(&mut canvas);
+			color_square.draw(&mut canvas);
+
+			canvas.present();
         }
         to_draw = false;
 
@@ -89,19 +94,19 @@ pub fn run(config: &Config) -> Result<(), Box<dyn Error>> {
             }
         }
 
-	let mouse = event_pump.mouse_state();
-	colors_rect.update(&mouse);
-	colors_line.update(&mouse);
-	if mouse.is_mouse_button_pressed(MouseButton::Left) {
-	    colors_rect.set_hue(colors_line.get_hue());
-	    color_square.set_color(
-		hsv2rgb(
-		    colors_line.get_hue(),
-		    colors_rect.get_saturation(),
-		    colors_rect.get_value()
-		)
-	    );
-	}
+		let mouse = event_pump.mouse_state();
+		colors_rect.update(&mouse);
+		colors_line.update(&mouse);
+		if mouse.is_mouse_button_pressed(MouseButton::Left) {
+			colors_rect.set_hue(colors_line.get_hue());
+			color_square.set_color(
+				hsv2rgb(
+					colors_line.get_hue(),
+					colors_rect.get_saturation(),
+					colors_rect.get_value()
+				)
+			);
+		}
 
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }

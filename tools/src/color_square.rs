@@ -3,6 +3,8 @@ use sdl2::video::Window;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
 
+use crate::traits::Draw;
+
 pub struct ColorSquare {
     rect: Rect,
     color: Color,
@@ -18,7 +20,13 @@ impl ColorSquare {
         }
     }
 
-    pub fn draw(&self, canvas: &mut Canvas<Window>) {
+    pub fn set_color(&mut self, color: Color) {
+        self.color = color;
+    }
+}
+
+impl Draw for ColorSquare {
+    fn draw(&mut self, canvas: &mut Canvas<Window>) {
         let rects = [
             Rect::new(
 				self.rect.x - self.border_size / 2,
@@ -33,9 +41,5 @@ impl ColorSquare {
             canvas.set_draw_color(color);
             canvas.fill_rect(rect).expect("can't fill rect");
         }
-    }
-
-    pub fn set_color(&mut self, color: Color) {
-        self.color = color;
     }
 }

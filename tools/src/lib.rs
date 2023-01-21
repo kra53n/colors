@@ -5,6 +5,8 @@ pub use funcs::{
 	return_point_to_rect_edge
 };
 
+pub mod traits;
+
 mod colors_rect;
 pub use colors_rect::ColorsRect;
 
