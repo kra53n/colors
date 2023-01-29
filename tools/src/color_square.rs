@@ -3,7 +3,7 @@ use sdl2::video::Window;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
 
-use crate::traits::Draw;
+use crate::traits::Component;
 
 pub struct ColorSquare {
     rect: Rect,
@@ -25,7 +25,7 @@ impl ColorSquare {
     }
 }
 
-impl Draw for ColorSquare {
+impl Component for ColorSquare {
     fn draw(&mut self, canvas: &mut Canvas<Window>) {
         let rects = [
             Rect::new(

@@ -4,7 +4,7 @@ use sdl2::render::Canvas;
 use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 
-use crate::traits::Draw;
+use crate::traits::Component;
 use crate::funcs::{set_rect_center, hsv2rgb, return_point_to_rect_edge};
 
 pub struct ColorsRect {
@@ -73,7 +73,7 @@ impl ColorsRect {
     }
 }
 
-impl Draw for ColorsRect {
+impl Component for ColorsRect {
     fn draw(&mut self, canvas: &mut Canvas<Window>) {
         let w = self.rect.w / 100;
         let h = self.rect.h / 100;

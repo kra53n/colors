@@ -11,8 +11,7 @@ fn main() {
 		color_square_border_size: 4,
 	};
 
-	if let Err(e) = mycolor::run(&config) {
-		println!("Application error: {}", e);
-		process::exit(1);
-	}
+	mycolor::App::init(config)
+		.expect("something")
+		.run();
 }

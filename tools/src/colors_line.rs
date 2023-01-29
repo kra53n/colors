@@ -5,7 +5,7 @@ use sdl2::mouse::MouseState;
 use sdl2::rect::{Rect, Point};
 
 use crate::funcs::{hsv2rgb, set_rect_center, return_point_to_rect_edge};
-use crate::traits::Draw;
+use crate::traits::Component;
 
 pub struct ColorsLine {
     rect: Rect,
@@ -62,7 +62,7 @@ impl ColorsLine {
     }
 }
 
-impl Draw for ColorsLine {
+impl Component for ColorsLine {
     fn draw(&mut self, canvas: &mut Canvas<Window>) {
         let w: u32 = 1;
         let mut rect: Rect = Rect::new(self.rect.x, self.rect.y, w, self.rect.h as u32);
